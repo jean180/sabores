@@ -1,0 +1,72 @@
+services:
+
+  mysql:
+    image: mysql:8.0
+    container_name: sabores_mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root_secret}
+      MYSQL_DATABASE:      ${DB_NAME:-sabores_db}
+      MYSQL_USER:          ${DB_USER:-sabores_user}
+      MYSQL_PASSWORD:      ${DB_PASSWORD:-sabores_pass}
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - sabores_net
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD:-root_secret}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: sabores_backend
+    restart: unless-stopped
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      DB_HOST:       mysql
+      DB_PORT:       3306
+      DB_NAME:       ${DB_NAME:-sabores_db}
+      DB_USER:       ${DB_USER:-sabores_user}
+      DB_PASSWORD:   ${DB_PASSWORD:-sabores_pass}
+      JWT_SECRET:    ${JWT_SECRET:-c2FiMDByM3NfajB0X3MzY3IzdF9rM3lfZjByX2Rldl9vbmx5X2RvX25vdF91c2VfaW5fcHJvZA==}
+      CORS_ORIGINS:  ${CORS_ORIGINS:-http://localhost:4200,http://localhost:80}
+    ports:
+      - "8080:8080"
+    networks:
+      - sabores_net
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8080/api/categories || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 45s
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: sabores_frontend
+    restart: unless-stopped
+    depends_on:
+      backend:
+        condition: service_healthy
+    ports:
+      - "80:80"
+    networks:
+      - sabores_net
+
+volumes:
+  mysql_data:
+
+networks:
+  sabores_net:
+    driver: bridge

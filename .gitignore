@@ -1,0 +1,40 @@
+# ---- Frontend ----
+frontend/node_modules/
+frontend/dist/
+frontend/.angular/
+frontend/.sass-cache/
+
+# ---- Backend ----
+backend/target/
+backend/.mvn/repository/
+*.class
+*.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+# ---- Entornos / secretos ----
+.env
+.env.local
+.env.*.local
+*.env
+
+# ---- IDEs ----
+.idea/
+*.iml
+.vscode/
+*.swp
+*.swo
+
+# ---- OS ----
+.DS_Store
+Thumbs.db
+
+# ---- Logs y archivos generados ----
+*.log
+build.log
+
+# ---- Claude Code (uso local) ----
+.claude/
+
+# ---- Docker ----
+docker-volumes/
