@@ -301,6 +301,21 @@ import { missingQty } from '../../../core/utils/unit.util';
     .rating-date { font-size: 0.78rem; color: #95a5a6; margin-left: auto; }
     .rating-comment { font-size: 0.875rem; color: #2D3436; margin: 0; padding-left: 2px; }
     .no-ratings-text { font-size: 0.875rem; color: #52796F; margin: 0; }
+
+    @media (max-width: 768px) {
+      .detail-title { font-size: 1.5rem; }
+      .detail-hero { min-height: 240px; }
+      .detail-actions { gap: 6px; }
+      .btn-fav-hero, .btn-edit-hero, .btn-delete-hero { font-size: 0.8rem; padding: 6px 12px; }
+    }
+
+    @media (max-width: 576px) {
+      .detail-title { font-size: 1.25rem; }
+      .detail-hero { min-height: 200px; padding-bottom: 1.25rem; }
+      .detail-body { padding: 1.25rem 0; }
+      .detail-card { padding: 1rem; }
+      .detail-actions { flex-wrap: wrap; }
+    }
   `]
 })
 export class RecipeDetailComponent implements OnInit {

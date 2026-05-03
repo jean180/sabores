@@ -33,6 +33,7 @@ type MealType = 'DESAYUNO' | 'ALMUERZO' | 'COMIDA' | 'MERIENDA' | 'CENA';
             <div class="spinner-border text-success"></div>
           </div>
         } @else {
+          <div class="planner-scroll-wrapper">
           <div class="planner-grid">
             <div class="meal-col-label"></div>
             @for (day of weekDays(); track day.iso) {
@@ -66,6 +67,7 @@ type MealType = 'DESAYUNO' | 'ALMUERZO' | 'COMIDA' | 'MERIENDA' | 'CENA';
                 </div>
               }
             }
+          </div>
           </div>
 
           <div class="week-summary">
@@ -136,7 +138,8 @@ type MealType = 'DESAYUNO' | 'ALMUERZO' | 'COMIDA' | 'MERIENDA' | 'CENA';
     .nav-btn { background: #fff; border: 1px solid #C8E6C9; border-radius: 8px; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #2D6A4F; }
     .nav-btn:hover { background: #2D6A4F; color: #fff; }
     .week-label { font-size: 0.9rem; font-weight: 500; color: #1B4332; min-width: 160px; text-align: center; }
-    .planner-grid { display: grid; grid-template-columns: 80px repeat(7, 1fr); gap: 4px; margin-bottom: 1.5rem; overflow-x: auto; }
+    .planner-scroll-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 1.5rem; }
+    .planner-grid { display: grid; grid-template-columns: 70px repeat(7, minmax(90px, 1fr)); gap: 4px; min-width: 700px; }
     .day-header { text-align: center; padding: 8px 4px; }
     .day-name { display: block; font-size: 0.75rem; font-weight: 600; color: #2D6A4F; text-transform: uppercase; letter-spacing: 0.5px; }
     .day-num { display: block; font-size: 0.85rem; color: #52796F; }
@@ -175,6 +178,19 @@ type MealType = 'DESAYUNO' | 'ALMUERZO' | 'COMIDA' | 'MERIENDA' | 'CENA';
     .search-dropdown { position: absolute; top: 100%; left: 0; right: 0; z-index: 100; list-style: none; padding: 0; margin: 0; background: #fff; border: 1px solid #C8E6C9; border-radius: 8px; max-height: 180px; overflow-y: auto; box-shadow: 0 4px 16px rgba(0,0,0,0.1); }
     .search-dropdown li { padding: 8px 12px; font-size: 0.875rem; cursor: pointer; color: #1B4332; }
     .search-dropdown li:hover { background: #F0FAF4; }
+
+    @media (max-width: 768px) {
+      .page-title { font-size: 1.4rem; }
+      .week-label { min-width: 120px; font-size: 0.8rem; }
+      .week-summary { gap: 1rem; padding: 0.75rem 1rem; }
+      .sum-cart-action { margin-left: 0; width: 100%; }
+      .btn-add-to-cart { width: 100%; justify-content: center; }
+    }
+
+    @media (max-width: 480px) {
+      .page-header { flex-direction: column; align-items: flex-start; }
+      .sum-num { font-size: 1.25rem; }
+    }
   `]
 })
 export class PlannerComponent implements OnInit {

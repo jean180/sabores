@@ -14,18 +14,19 @@ import { CartService } from '../../../core/services/cart.service';
           <i class="bi bi-flower1 me-2"></i>sabores
         </a>
         <button class="navbar-toggler" type="button"
-          data-bs-toggle="collapse" data-bs-target="#navMenu">
+          (click)="toggleNav($event)"
+          [attr.aria-expanded]="navOpen()">
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navMenu">
+        <div class="navbar-collapse" [class.show]="navOpen()" id="navMenu">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link" routerLink="/recipes" routerLinkActive="active">
+              <a class="nav-link" routerLink="/recipes" routerLinkActive="active" (click)="navOpen.set(false)">
                 <i class="bi bi-search me-1"></i>Explorar
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link cart-link" routerLink="/cart" routerLinkActive="active">
+              <a class="nav-link cart-link" routerLink="/cart" routerLinkActive="active" (click)="navOpen.set(false)">
                 <i class="bi bi-cart3 me-1"></i>Carrito
                 @if (cartSvc.pendingCount() > 0) {
                   <span class="cart-badge">{{ cartSvc.pendingCount() }}</span>
@@ -34,17 +35,17 @@ import { CartService } from '../../../core/services/cart.service';
             </li>
             @if (auth.isLoggedIn()) {
               <li class="nav-item">
-                <a class="nav-link" routerLink="/pantry" routerLinkActive="active">
+                <a class="nav-link" routerLink="/pantry" routerLinkActive="active" (click)="navOpen.set(false)">
                   <i class="bi bi-basket me-1"></i>Despensa
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" routerLink="/planner" routerLinkActive="active">
+                <a class="nav-link" routerLink="/planner" routerLinkActive="active" (click)="navOpen.set(false)">
                   <i class="bi bi-calendar3 me-1"></i>Planificador
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" routerLink="/favorites" routerLinkActive="active">
+                <a class="nav-link" routerLink="/favorites" routerLinkActive="active" (click)="navOpen.set(false)">
                   <i class="bi bi-heart me-1"></i>Favoritos
                 </a>
               </li>
@@ -52,7 +53,7 @@ import { CartService } from '../../../core/services/cart.service';
           </ul>
           <div class="d-flex align-items-center gap-2">
             @if (auth.isLoggedIn()) {
-              <a routerLink="/recipes/new" class="btn btn-success-soft btn-sm">
+              <a routerLink="/recipes/new" class="btn btn-success-soft btn-sm" (click)="navOpen.set(false)">
                 <i class="bi bi-plus-lg me-1"></i>Nueva receta
               </a>
               <div class="dropdown-wrapper">
@@ -104,6 +105,13 @@ import { CartService } from '../../../core/services/cart.service';
     }
     .navbar-toggler { border-color: rgba(255,255,255,0.3); }
     .navbar-toggler-icon { filter: invert(1); }
+
+    /* Collapse sin Bootstrap JS */
+    .navbar-collapse { display: none; }
+    .navbar-collapse.show { display: flex; }
+    @media (min-width: 992px) {
+      .navbar-collapse { display: flex !important; flex-basis: auto; }
+    }
 
     .btn-success-soft {
       background: rgba(255,255,255,0.15);
@@ -160,21 +168,56 @@ import { CartService } from '../../../core/services/cart.service';
       display: inline-flex; align-items: center; justify-content: center;
       line-height: 1;
     }
+
+    @media (max-width: 991px) {
+      .navbar-collapse.show {
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+        padding-bottom: 0.75rem;
+        border-top: 1px solid rgba(255,255,255,0.1);
+        margin-top: 0.5rem;
+      }
+      .navbar-collapse.show .navbar-nav { width: 100%; }
+      .navbar-collapse.show .d-flex {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        padding-top: 0.5rem;
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .dropdown-menu-custom {
+        right: 0;
+        left: auto;
+        max-width: calc(100vw - 1rem);
+        min-width: 160px;
+      }
+      .btn-user { font-size: 0.78rem; padding: 0.3rem 0.5rem; }
+    }
   `]
 })
 export class NavbarComponent {
   auth = inject(AuthService);
   cartSvc = inject(CartService);
   dropdownOpen = signal(false);
+  navOpen = signal(false);
 
   toggleDropdown(event: Event): void {
     event.stopPropagation();
     this.dropdownOpen.update(v => !v);
   }
 
+  toggleNav(event: Event): void {
+    event.stopPropagation();
+    this.navOpen.update(v => !v);
+  }
+
   @HostListener('document:click')
-  closeDropdown(): void {
+  closeAll(): void {
     this.dropdownOpen.set(false);
+    this.navOpen.set(false);
   }
 
   initials(): string {

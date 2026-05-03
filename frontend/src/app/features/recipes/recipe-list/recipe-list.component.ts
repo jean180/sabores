@@ -181,6 +181,25 @@ import { RecipeCardComponent } from '../../../shared/components/recipe-card/reci
       border-radius: 50px; padding: 0.6rem 2rem; font-weight: 500;
     }
     .btn-load-more:hover { background: #2D6A4F; color: #fff; }
+
+    @media (max-width: 768px) {
+      .hero-title { font-size: 1.5rem; }
+      .hero-sub { font-size: 0.9rem; }
+      .hero-banner { padding: 2rem 0 1.5rem; }
+      .ing-input { width: 150px; }
+    }
+
+    @media (max-width: 576px) {
+      .hero-title { font-size: 1.3rem; }
+      .filters-panel { flex-direction: column; align-items: flex-start; gap: 0.6rem; }
+      .filter-sep { display: none; }
+      .time-filter { width: 100%; }
+      .time-input { width: 100px; }
+      .ing-search-wrapper { width: 100%; }
+      .ing-input { width: 100%; }
+      .ing-dropdown { width: 100%; }
+      .recipes-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 14px; }
+    }
   `]
 })
 export class RecipeListComponent implements OnInit {

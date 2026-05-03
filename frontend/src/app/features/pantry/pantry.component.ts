@@ -216,6 +216,19 @@ const CATEGORY_META: Record<string, { label: string; icon: string; order: number
     .search-dropdown li { padding: 8px 12px; cursor: pointer; font-size: 0.9rem; color: #2D3436; }
     .search-dropdown li:hover { background: #F0FAF4; }
     .selected-ing { font-size: 0.875rem; color: #1B4332; margin-bottom: 1rem; }
+
+    @media (max-width: 768px) {
+      .stats-row { grid-template-columns: repeat(2, 1fr); }
+      .pantry-grid { grid-template-columns: 1fr; }
+      .page-header { flex-direction: column; align-items: flex-start; }
+      .page-title { font-size: 1.4rem; }
+    }
+
+    @media (max-width: 480px) {
+      .stats-row { grid-template-columns: 1fr; }
+      .suggestion-item { flex-wrap: wrap; }
+      .sug-btn { width: 100%; text-align: center; margin-top: 4px; }
+    }
   `]
 })
 export class PantryComponent implements OnInit {

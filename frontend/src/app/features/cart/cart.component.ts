@@ -363,12 +363,28 @@ interface ModalItem {
     /* Oculta en pantalla; los estilos de impresión van en styles.scss global */
     .print-sheet { display: none; }
 
+    @media (max-width: 768px) {
+      .page-title { font-size: 1.35rem; }
+      .header-actions { gap: 0.35rem; }
+      .header-actions .btn { font-size: 0.78rem; padding: 0.35rem 0.6rem; }
+      .modal-card { max-width: 100%; border-radius: 12px; }
+    }
+
     @media (max-width: 576px) {
-      .qty-field { width: 80px; }
+      .page-header { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
+      .header-actions { flex-wrap: wrap; width: 100%; }
+      .header-actions .btn { flex: 1 1 auto; justify-content: center; font-size: 0.8rem; }
+      .form-row { flex-direction: column; }
+      .qty-field { width: 100%; }
       .unit-field { width: 100%; }
       .btn-group-add { width: 100%; }
-      .btn-primary-add { width: 100% !important; }
-      .modal-unit { width: 110px; }
+      .btn-primary-add { width: 100% !important; font-size: 1rem; padding: 0.55rem; }
+      .modal-item-row { flex-wrap: wrap; }
+      .modal-item-name { width: 100%; white-space: normal; min-width: 0; }
+      .modal-qty { width: 90px; }
+      .modal-unit { width: calc(100% - 100px); }
+      .item-name { font-size: 0.88rem; }
+      .item-qty { font-size: 0.78rem; }
     }
   `]
 })

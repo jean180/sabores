@@ -234,6 +234,15 @@ import { UnitSelectComponent } from '../../../shared/components/unit-select/unit
     .btn-sabores { background: #2D6A4F; color: #fff; border: none; border-radius: 10px; padding: 0.65rem 1.75rem; font-weight: 600; }
     .btn-sabores:hover:not(:disabled) { background: #1B4332; color: #fff; }
     .btn-sabores:disabled { opacity: 0.7; }
+
+    @media (max-width: 576px) {
+      .page-title { font-size: 1.4rem; }
+      .ingredient-row { flex-wrap: wrap; }
+      .qty-input  { width: 80px; }
+      .unit-input { width: calc(100% - 96px); }
+      .form-actions { flex-direction: column; }
+      .form-actions .btn { width: 100%; }
+    }
   `]
 })
 export class RecipeFormComponent implements OnInit {

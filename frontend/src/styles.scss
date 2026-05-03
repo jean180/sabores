@@ -41,6 +41,28 @@ body {
 a { transition: color 0.15s; }
 button { transition: background 0.15s, color 0.15s, border-color 0.15s; }
 
+/* ── Base móvil ────────────────────────────────────────────────────────── */
+html { -webkit-text-size-adjust: 100%; }
+
+/* Padding lateral mínimo en móvil para el contenedor Bootstrap */
+@media (max-width: 576px) {
+  .container, .container-fluid { padding-left: 12px; padding-right: 12px; }
+  /* Evita overflow horizontal global */
+  body { overflow-x: hidden; }
+}
+
+/* Inputs más fáciles de tocar en móvil */
+@media (max-width: 768px) {
+  input[type="text"],
+  input[type="number"],
+  input[type="email"],
+  input[type="password"],
+  select,
+  textarea {
+    font-size: 16px !important; /* Evita zoom automático en iOS */
+  }
+}
+
 /* ── Impresión lista de la compra ──────────────────────────────────────── */
 @media print {
   @page {
